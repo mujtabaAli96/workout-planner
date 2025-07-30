@@ -4,6 +4,17 @@ import { db } from '@/lib/db';
 import { workoutPlans, weeks, days, exercises } from '@/lib/db/schema';
 import { nanoid } from 'nanoid';
 
+export async function GET() {
+  return NextResponse.json(
+    { 
+      message: 'This endpoint only accepts POST requests. Please use the application to generate workout plans.',
+      method: 'POST',
+      body: { prompt: 'string - Your workout plan description' }
+    },
+    { status: 405 }
+  );
+}
+
 export async function POST(request) {
   try {
     const { prompt } = await request.json();
@@ -73,16 +84,4 @@ export async function POST(request) {
       { status: 500 }
     );
   }
-}
-
-// Add OPTIONS method to handle CORS preflight requests
-export async function OPTIONS(request) {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
-  });
 } 
