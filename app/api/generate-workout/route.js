@@ -73,4 +73,16 @@ export async function POST(request) {
       { status: 500 }
     );
   }
+}
+
+// Add OPTIONS method to handle CORS preflight requests
+export async function OPTIONS(request) {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
 } 
