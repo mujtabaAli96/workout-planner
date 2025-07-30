@@ -5,7 +5,9 @@ import * as schema from '@/lib/db/schema.js';
 
 export async function POST() {
   try {
-    const sqlite = new Database('./sqlite.db');
+    // On Vercel, use in-memory database since file system is not persistent
+    const dbPath = process.env.VERCEL ? ':memory:' : './sqlite.db';
+    const sqlite = new Database(dbPath);
     const db = drizzle(sqlite, { schema });
 
     const createTablesSQL = `
